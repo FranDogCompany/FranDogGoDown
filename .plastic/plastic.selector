@@ -1,0 +1,4 @@
+repository "FranDogGoDown@frandog@cloud"
+  path "/"
+    br "/main"
+    co "/main"
