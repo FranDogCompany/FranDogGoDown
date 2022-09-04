@@ -10,6 +10,7 @@ TagManager:
   - DeathLine
   - Enemy
   - Enemy_Bat
+  - Enemy_Slime
   layers:
   - Default
   - TransparentFX

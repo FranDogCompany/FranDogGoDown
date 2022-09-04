@@ -18,9 +18,9 @@ public class Enemy : MonoBehaviour
 
     public GameObject headPoint;     //判定頭部位置用
 
-    public GameObject feetPoint;       //玩家，取FeetPoint用
+    //public GameObject feetPoint;       //玩家，取FeetPoint用
 
-    private float height = 0.0f;     //判斷feetPoint與headPoint的高度差
+    //private float height = 0.0f;     //判斷feetPoint與headPoint的高度差
 
     void Start()
     {
@@ -115,6 +115,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //後來改寫在Player.cs
     //當頭部被踩到
     // private void OnCollisionEnter2D(Collision2D other)
     // {
@@ -129,4 +130,17 @@ public class Enemy : MonoBehaviour
     //     }
 
     // }
+
+    public void reduceHP(int ATK)
+    {
+        Debug.Log("HP一開始是" + HP);
+        HP = HP - ATK;
+        Debug.Log("HP後來是" + HP);
+
+        //如果HP低於0，Enemy物件消失
+        if (HP <= 0)
+        {
+            GameObject.Destroy(this.gameObject);
+        }
+    }
 }

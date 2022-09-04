@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] int currentHp;
 
+    public int PlayerATK;
+
     public PlayerHP HpBar;
 
     public Text scoreText;
@@ -149,7 +151,7 @@ public class Player : MonoBehaviour
             ModifyHp(-3);     //扣3滴血
             GetComponent<Animator>().SetTrigger("hurt");
         }
-        else if (other.gameObject.tag.Contains("Enemy"))   //TODO 踩踏Enemy頭部判定
+        else if (other.gameObject.tag.Contains("Enemy"))   //踩踏Enemy頭部判定
         {
             //如果法線、法向量往上的話(0f, 1f)
             if (other.contacts[0].normal == new Vector2(0f, 1f))
@@ -157,12 +159,17 @@ public class Player : MonoBehaviour
                 //Player彈起
                 GetComponent<Rigidbody2D>().AddForce(Vector2.up * 3.0f, ForceMode2D.Impulse);
                 other.collider.GetComponent<Animator>().SetTrigger("Hit");
+
+                //舊踩頭音效寫法
+                //gameSound = GameObject.Find("EventSystem").GetComponent<SystemCS>().stepOnHead;
+                //GameObject.Find("EventSystem").GetComponent<SystemCS>().myAudioSource.PlayOneShot(gameSound);
+                AudioManager._instance.PlayMusic(0);
                 
-                //踩頭音效
-                gameSound = GameObject.Find("EventSystem").GetComponent<SystemCS>().stepOnHead;
-                GameObject.Find("EventSystem").GetComponent<SystemCS>().myAudioSource.PlayOneShot(gameSound);
-                //TODO 還有音太大聲、扣HP、死亡等等
-            }else{
+                //Enemy扣HP
+                other.gameObject.GetComponent<Enemy>().reduceHP(PlayerATK);
+            }
+            else
+            {
                 enemyAtk = other.collider.GetComponent<Enemy>().ATK;
                 other.gameObject.GetComponent<AudioSource>().Play();
                 ModifyHp(-enemyAtk);   //扣血
