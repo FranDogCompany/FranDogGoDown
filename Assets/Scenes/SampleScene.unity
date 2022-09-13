@@ -457,6 +457,7 @@ GameObject:
   - component: {fileID: 146711840}
   - component: {fileID: 146711843}
   - component: {fileID: 146711844}
+  - component: {fileID: 146711845}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -629,6 +630,18 @@ MonoBehaviour:
   moveUpSpeed: 0
   myAudioSource: {fileID: 0}
   stepOnHead: {fileID: 8300000, guid: ce1ba751d1336814a9186950640655e7, type: 3}
+--- !u!114 &146711845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146711839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ccf9071d80f7924798c810cd9d65661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &166218546
 GameObject:
   m_ObjectHideFlags: 0
