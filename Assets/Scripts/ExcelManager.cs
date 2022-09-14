@@ -7,8 +7,6 @@ using Newtonsoft.Json;
 
 public class ExcelManager : MonoBehaviour
 {
-    List<EnemyStatus> eStatuses = new List<EnemyStatus>();
-
     void Start()
     {
         // //取得Excel路徑  

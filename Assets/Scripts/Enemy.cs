@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static EnemyStatusModel;
 
 public class Enemy : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] int level;   //關卡等級
 
+    public ArrayData[] enemyStatusModel;    //存入怪物資料用
     public float timerTemp = 0f;    //計算轉向時機用
 
     public GameObject headPoint;     //判定頭部位置用
@@ -22,8 +24,10 @@ public class Enemy : MonoBehaviour
 
     //private float height = 0.0f;     //判斷feetPoint與headPoint的高度差
 
+
     void Start()
     {
+        enemyStatusModel = new ArrayData[10];
         getStatus();
     }
 
@@ -64,6 +68,14 @@ public class Enemy : MonoBehaviour
 
         //取得SystemCS的level
         level = GameObject.Find("EventSystem").GetComponent<SystemCS>().level;
+
+        //TODO 讀取Excel取得怪物資料
+        ExcelManager excelManager = new ExcelManager();
+        string json = excelManager.ExcelToJson("EnemyStatus.xlsx");
+        Debug.Log(json);
+        enemyStatusModel = JsonHelper.FromJson<ArrayData>(json);
+        Debug.Log("測試~~~" + enemyStatusModel[0].enemyName);
+        Debug.Log("測試~~~" + enemyStatusModel[1].enemyName);
 
         //蝙蝠
         if ("Enemy_Bat".Equals(enemyTag))
