@@ -60,7 +60,7 @@ public class ExcelManager : MonoBehaviour
     public string ExcelToJson(string ExcelPath)
     {
         //取得Excel路徑  
-        string filePath = Application.streamingAssetsPath + "/" + ExcelPath;
+        string filePath = Application.streamingAssetsPath + "/" + ExcelPath + ".xlsx";
 
         //獲取Excel文件信息
         FileInfo fileInfo = new FileInfo(filePath);
@@ -84,7 +84,7 @@ public class ExcelManager : MonoBehaviour
             for (int col = start.Column; col <= end.Column; col++)
             {
                 columnName = workSheet.Cells[1, col].Value.ToString();
-                DataColumn itemColumn = new DataColumn(columnName); //建立item欄
+                DataColumn itemColumn = new DataColumn(columnName); //建立key欄位
                 table.Columns.Add(itemColumn);  //DataTable加入欄位
             }
             //DataSet加入Table
@@ -102,8 +102,11 @@ public class ExcelManager : MonoBehaviour
 
             //轉成JSON格式
             json = JsonConvert.SerializeObject(dataSet);
-            //顯示
-            Debug.Log(json);
+            
+            //存成JSON檔
+            File.WriteAllText(Application.streamingAssetsPath + "/" + ExcelPath, json);
+
+            //回傳
             return json;
         }//using作用:當大括號內執行完畢後，釋放小跨號內的資源
 
