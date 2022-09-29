@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
 
     //private float height = 0.0f;     //判斷feetPoint與headPoint的高度差
 
-    //TODO 9/25 最終測試
+    //怪物數值List
     public EnemyStatusList myEnemyStatusList = new EnemyStatusList();
 
 
@@ -39,20 +39,6 @@ public class Enemy : MonoBehaviour
         moveSpeed = GameObject.Find("EventSystem").GetComponent<SystemCS>().moveUpSpeed;
 
         moveMode();
-
-        //TODO 9/25測試
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Debug.Log("您按下了S鍵");
-
-
-            ExcelManager excelManager = gameObject.AddComponent<ExcelManager>();    //MonoBehaviour裡不能用new，要用AddComponent
-            string json = excelManager.ExcelToJson("EnemyStatus");
-            Debug.Log("json ===== " + json);
-            myEnemyStatusList = JsonUtility.FromJson<EnemyStatusList>(json);
-            Debug.Log("enemyStatusModel2[0] = " + myEnemyStatusList.Table1[0].LV10_ATK);
-            Debug.Log("enemyStatusModel2[1] = " + myEnemyStatusList.Table1[1].LV10_ATK);
-        }
     }
 
     void moveMode()
@@ -85,58 +71,47 @@ public class Enemy : MonoBehaviour
         //取得SystemCS的level
         level = GameObject.Find("EventSystem").GetComponent<SystemCS>().level;
 
-        //TODO 讀取Excel取得怪物資料
+        //讀取Excel取得怪物資料
         ExcelManager excelManager = gameObject.AddComponent<ExcelManager>();    //MonoBehaviour裡不能用new，要用AddComponent
         string json = excelManager.ExcelToJson("EnemyStatus");
-        Debug.Log("第81行 = " + json);
+        myEnemyStatusList = JsonUtility.FromJson<EnemyStatusList>(json);
 
         //蝙蝠
         if ("Enemy_Bat".Equals(enemyTag))
         {
-            switch (level)
-            {
-                case 1:
-                    HP = 10;
-                    ATK = 15;
-                    break;
-                case 2:
-                    HP = 20;
-                    ATK = 30;
-                    break;
-                case 3:
-                    HP = 30;
-                    ATK = 45;
-                    break;
-                case 4:
-                    HP = 40;
-                    ATK = 60;
-                    break;
-                case 5:
-                    HP = 50;
-                    ATK = 75;
-                    break;
-                case 6:
-                    HP = 60;
-                    ATK = 90;
-                    break;
-                case 7:
-                    HP = 70;
-                    ATK = 105;
-                    break;
-                case 8:
-                    HP = 80;
-                    ATK = 120;
-                    break;
-                case 9:
-                    HP = 90;
-                    ATK = 135;
-                    break;
-                case 10:
-                    HP = 100;
-                    ATK = 150;
-                    break;
-            }
+            setStatus(myEnemyStatusList, "蝙蝠");
+        }
+        else if ("Enemy_Slime".Equals(enemyTag))
+        {
+            setStatus(myEnemyStatusList, "史萊姆");
+        }
+    }
 
+    //塞值到HP、ATK
+    public void setStatus(EnemyStatusList list, string enemyName)
+    {
+        for (int i = 0; i < list.Table1.GetLength(0); i++)
+        {
+            if ((enemyName).Equals(list.Table1[i].enemyName))
+            {
+                HP = list.Table1[i].BASIC_HP + (list.Table1[i].LvUp_HP * level);
+                ATK = list.Table1[i].BASIC_ATK + (list.Table1[i].LvUp_ATK * level);
+                break;
+            }
+        }
+    }
+
+    //扣血邏輯
+    public void reduceHP(int ATK)
+    {
+        Debug.Log("HP一開始是" + HP);
+        HP = HP - ATK;
+        Debug.Log("HP後來是" + HP);
+
+        //如果HP低於0，Enemy物件消失
+        if (HP <= 0)
+        {
+            GameObject.Destroy(this.gameObject);
         }
     }
 
@@ -153,20 +128,5 @@ public class Enemy : MonoBehaviour
     //             other.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * 2.0f, ForceMode2D.Impulse);
     //         }
     //     }
-
     // }
-
-    public void reduceHP(int ATK)
-    {
-        Debug.Log("HP一開始是" + HP);
-        HP = HP - ATK;
-        Debug.Log("HP後來是" + HP);
-
-        //如果HP低於0，Enemy物件消失
-        if (HP <= 0)
-        {
-            GameObject.Destroy(this.gameObject);
-        }
-    }
-
 }
