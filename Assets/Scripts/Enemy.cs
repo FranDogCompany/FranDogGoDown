@@ -18,10 +18,11 @@ public class Enemy : MonoBehaviour
 
     public float timerTemp = 0f;    //計算轉向時機用
 
-    public GameObject headPoint;     //判定頭部位置用
+    public GameObject feetPoint;     //給地面型敵人判定是否快走出floor
 
-    //public GameObject feetPoint;       //玩家，取FeetPoint用
-
+    //後來改寫在Player.cs，以下都沒用了。
+    //public GameObject headPoint;     //判定頭部位置用
+    //public GameObject feetPoint;     //玩家，取FeetPoint用
     //private float height = 0.0f;     //判斷feetPoint與headPoint的高度差
 
     //怪物數值List
@@ -30,6 +31,9 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        //取得物件tag
+        enemyTag = this.gameObject.tag;
+
         getStatus();
     }
 
@@ -38,10 +42,49 @@ public class Enemy : MonoBehaviour
         //取得SystemCS的moveUpSpeed
         moveSpeed = GameObject.Find("EventSystem").GetComponent<SystemCS>().moveUpSpeed;
 
-        moveMode();
+        if ("Enemy_Bat".Equals(enemyTag))
+        {
+            moveMode_Fly();
+        }
+        else if ("Enemy_Slime".Equals(enemyTag))
+        {
+            moveMode_Ground();
+        }
     }
 
-    void moveMode()
+    //地面敵人用的移動AI
+    void moveMode_Ground()
+    {
+        timerTemp += Time.deltaTime;
+        //如果timerTemp到達關卡升級所需時間
+        if (timerTemp <= 2)
+        {
+            //floor自動上移，為避免手機性能影響速度，要用Time.deltaTime,
+            transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
+            GetComponent<SpriteRenderer>().flipX = false;    //控制圖像左右方向
+
+            //TODO 如果feetPoint脫離floor，則掉頭避免掉下去
+            void OnCollisionExit(Collision other)
+            {
+                if (other.gameObject.tag == "NormalFloor")
+                {
+
+                }
+            }
+        }
+        else if (timerTemp > 2 && timerTemp <= 4)
+        {
+            transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
+            GetComponent<SpriteRenderer>().flipX = true;    //控制圖像左右方向
+        }
+        else if (timerTemp > 4)
+        {
+            timerTemp = 0f;
+        }
+    }
+
+    //飛行敵人用的移動AI
+    void moveMode_Fly()
     {
         timerTemp += Time.deltaTime;
         //如果timerTemp到達關卡升級所需時間
@@ -49,12 +92,12 @@ public class Enemy : MonoBehaviour
         {
             //floor自動上移，為避免手機性能影響速度，要用Time.deltaTime,
             transform.Translate(moveSpeed * Time.deltaTime, moveSpeed * Time.deltaTime * 1.5f, 0);
-            GetComponent<SpriteRenderer>().flipX = true;    //控制圖像左右方向
+            GetComponent<SpriteRenderer>().flipX = false;    //控制圖像左右方向
         }
         else if (timerTemp > 2 && timerTemp <= 4)
         {
             transform.Translate(-moveSpeed * Time.deltaTime, moveSpeed * Time.deltaTime * 1.5f, 0);
-            GetComponent<SpriteRenderer>().flipX = false;    //控制圖像左右方向
+            GetComponent<SpriteRenderer>().flipX = true;    //控制圖像左右方向
         }
         else if (timerTemp > 4)
         {
@@ -65,9 +108,6 @@ public class Enemy : MonoBehaviour
     //取得怪物素質
     public void getStatus()
     {
-        //取得物件tag
-        enemyTag = this.gameObject.tag;
-
         //取得SystemCS的level
         level = GameObject.Find("EventSystem").GetComponent<SystemCS>().level;
 

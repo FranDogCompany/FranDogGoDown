@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1857673932}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HeadPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 166741976451328624}
   - component: {fileID: -335998038008211835}
   - component: {fileID: 399164241413062233}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy_Bat
   m_TagString: Enemy_Bat
   m_Icon: {fileID: 0}
@@ -157,9 +157,18 @@ MonoBehaviour:
   moveSpeed: 0
   enemyTag: 
   level: 0
+  enemyStatusModel:
+    items: 0
+    ID: 0
+    enemyName: 
+    BASIC_HP: 0
+    BASIC_ATK: 0
+    LvUp_HP: 0
+    LvUp_ATK: 0
   timerTemp: 0
   headPoint: {fileID: 1857673931}
-  feetPoint: {fileID: 0}
+  myEnemyStatusList:
+    Table1: []
 --- !u!61 &-335998038008211835
 BoxCollider2D:
   m_ObjectHideFlags: 0

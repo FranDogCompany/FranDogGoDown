@@ -11,6 +11,7 @@ TagManager:
   - Enemy
   - Enemy_Bat
   - Enemy_Slime
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -21,9 +22,9 @@ TagManager:
   - Nails
   - UI2
   - NormalFloor
-  - 
-  - 
-  - 
+  - Item
+  - Enemy
+  - Ceiling
   - 
   - 
   - 

@@ -740,10 +740,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 785732246}
     m_Modifications:
-    - target: {fileID: 166741976451328624, guid: 7d604e299bba9cc45b7db2876d3d40cb, type: 3}
-      propertyPath: feetPoint
-      value: 
-      objectReference: {fileID: 387689516}
+    - target: {fileID: 1857673931, guid: 7d604e299bba9cc45b7db2876d3d40cb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 214144961438718262, guid: 7d604e299bba9cc45b7db2876d3d40cb, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1932,7 +1932,7 @@ GameObject:
   - component: {fileID: 778306307}
   - component: {fileID: 778306310}
   - component: {fileID: 778306311}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Ceiling
   m_TagString: Ceiling
   m_Icon: {fileID: 0}
@@ -2404,10 +2404,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 785732246}
     m_Modifications:
-    - target: {fileID: 166741976451328624, guid: 7d604e299bba9cc45b7db2876d3d40cb, type: 3}
-      propertyPath: feetPoint
-      value: 
-      objectReference: {fileID: 387689516}
     - target: {fileID: 214144961438718262, guid: 7d604e299bba9cc45b7db2876d3d40cb, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -3859,7 +3855,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3656633880337238655, guid: 5c1552f4b467a914f9c3b132e45f89c2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.718
+      value: 1.082
       objectReference: {fileID: 0}
     - target: {fileID: 3656633880337238655, guid: 5c1552f4b467a914f9c3b132e45f89c2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4420,17 +4416,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Staff
       objectReference: {fileID: 0}
-    - target: {fileID: 5927453600955248985, guid: abc38943d25bbe04e9bcb58001e97adc, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8771487019191982592, guid: abc38943d25bbe04e9bcb58001e97adc, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8771487019191982592, guid: abc38943d25bbe04e9bcb58001e97adc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.394
+      value: 1.399
       objectReference: {fileID: 0}
     - target: {fileID: 8771487019191982592, guid: abc38943d25bbe04e9bcb58001e97adc, type: 3}
       propertyPath: m_LocalPosition.y

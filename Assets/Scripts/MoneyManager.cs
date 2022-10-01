@@ -36,7 +36,7 @@ public class MoneyManager : MonoBehaviour
         switch (level)
         {
             case 1:
-                moneyPercentage = 0.92f;
+                moneyPercentage = 0.02f;
                 break;
             case 2:
                 moneyPercentage = 0.03f;
