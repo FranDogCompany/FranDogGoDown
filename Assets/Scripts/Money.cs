@@ -29,7 +29,8 @@ public class Money : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Destroy(gameObject);
-            GameObject.Find("EventSystem").GetComponent<AudioSource>().Play();
+            // GameObject.Find("EventSystem").GetComponent<AudioSource>().Play();   //舊的播放金幣音效，音效是放在EventSystem
+            AudioManager._instance.PlayMusic(1);    //播放金幣音效
             GameObject.Find("Player").GetComponent<Player>().score += 100;
         }
     }

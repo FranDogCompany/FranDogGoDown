@@ -269,6 +269,15 @@ MonoBehaviour:
   moveSpeed: 0
   enemyTag: 
   level: 0
+  enemyStatusModel:
+    items: 0
+    ID: 0
+    enemyName: 
+    BASIC_HP: 0
+    BASIC_ATK: 0
+    LvUp_HP: 0
+    LvUp_ATK: 0
   timerTemp: 0
   headPoint: {fileID: 0}
-  feetPoint: {fileID: 0}
+  myEnemyStatusList:
+    Table1: []
