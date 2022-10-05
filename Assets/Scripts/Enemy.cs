@@ -18,7 +18,11 @@ public class Enemy : MonoBehaviour
 
     public float timerTemp = 0f;    //計算轉向時機用
 
-    public GameObject feetPoint;     //給地面型敵人判定是否快走出floor
+    public LayerMask layer;     //判斷feetUpPoint與feetDownPoint碰到的圖層
+    public Transform feetUpPoint;     //敵人右上方給地面型敵人判定是否快走出floor
+    public Transform feetDownPoint;      //敵人右下方給地面型敵人判定是否快走出floor
+
+    public bool feetPointIsOut;     //判斷判定框是否在外面
 
     //後來改寫在Player.cs，以下都沒用了。
     //public GameObject headPoint;     //判定頭部位置用
@@ -50,36 +54,31 @@ public class Enemy : MonoBehaviour
         {
             moveMode_Ground();
         }
+
+        //floor自中心點位置大於6格時，銷毀物件
+        if (transform.position.y > 6f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     //地面敵人用的移動AI
     void moveMode_Ground()
     {
-        timerTemp += Time.deltaTime;
-        //如果timerTemp到達關卡升級所需時間
-        if (timerTemp <= 2)
-        {
-            //floor自動上移，為避免手機性能影響速度，要用Time.deltaTime,
-            transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
-            GetComponent<SpriteRenderer>().flipX = false;    //控制圖像左右方向
+        Debug.Log("往左");
+        transform.Translate(moveSpeed * Time.deltaTime, moveSpeed * Time.deltaTime * 1.5f, 0);
 
-            //TODO 如果feetPoint脫離floor，則掉頭避免掉下去
-            void OnCollisionExit(Collision other)
-            {
-                if (other.gameObject.tag == "NormalFloor")
-                {
+        feetPointIsOut = Physics2D.Linecast(feetUpPoint.position, feetDownPoint.position, layer);
 
-                }
-            }
-        }
-        else if (timerTemp > 2 && timerTemp <= 4)
+        if (feetPointIsOut)
         {
-            transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
-            GetComponent<SpriteRenderer>().flipX = true;    //控制圖像左右方向
+            Debug.DrawLine(feetUpPoint.position, feetDownPoint.position, Color.red);
+            transform.localScale = new Vector3(transform.localScale.x * -1f, transform.localScale.y, 0);
+            moveSpeed *= -1f;
         }
-        else if (timerTemp > 4)
+        else
         {
-            timerTemp = 0f;
+            Debug.DrawLine(feetUpPoint.position, feetDownPoint.position, Color.red);
         }
     }
 
@@ -152,6 +151,19 @@ public class Enemy : MonoBehaviour
         if (HP <= 0)
         {
             GameObject.Destroy(this.gameObject);
+        }
+    }
+
+    //TODO 如果feetPoint脫離floor，則掉頭避免掉下去
+    void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.tag == "NomalFloor")
+        {
+            feetPointIsOut = true;
+        }
+        else
+        {
+            feetPointIsOut = false;
         }
     }
 

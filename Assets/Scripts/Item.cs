@@ -18,5 +18,15 @@ public class Item : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+
+    }
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            this.GetComponent<Animator>().SetBool("Open", true);
+        }
     }
 }

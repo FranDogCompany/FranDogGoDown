@@ -41,8 +41,8 @@ public class SystemCS : MonoBehaviour
         switch (level)
         {
             case 1:
-                moveUpSpeed = 1.0f;
-                //moveUpSpeed = 0f;     //測試用，停止上升
+                //moveUpSpeed = 1.0f;
+                moveUpSpeed = 0f;     //測試用，停止上升
                 levelUpTime = 15f;
                 break;
             case 2:
